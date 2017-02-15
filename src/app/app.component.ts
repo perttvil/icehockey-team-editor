@@ -1,9 +1,5 @@
 import {Component} from '@angular/core';
-
-export class Team {
-  id: number;
-  name: string;
-}
+import {Team} from "./team";
 
 const TEAMS: Team[] = [
   {id: 10, name: 'Tappara'},
@@ -27,22 +23,15 @@ const TEAMS: Team[] = [
   selector: 'my-app',
   template: `
   <h1>{{title}}</h1>
-  <div *ngIf="selectedTeam">
-    <h2>Details of {{selectedTeam.name}}</h2>
-    <div><label>id: </label>{{selectedTeam.id}}</div>
-    <div>
-      <label>name: </label>
-      <input [(ngModel)]="selectedTeam.name" placeholder="name">
-    </div>
-  </div>
-  <h2>My Teams</h2>
+  <h2>Teams in 2017 league</h2>
   <ul class="teams">
     <li *ngFor="let team of teams"
      [class.selected]="team === selectedTeam"
       (click)="onSelect(team)">
       <span class="badge">{{team.id}}</span> {{team.name}}
     </li>
-  </ul>`,
+  </ul>
+  <my-team-detail [team]="selectedTeam"></my-team-detail>`,
   styles: [`
   .selected {
     background-color: #CFD8DC !important;
