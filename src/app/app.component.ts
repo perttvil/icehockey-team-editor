@@ -1,23 +1,7 @@
 import {Component} from '@angular/core';
 import {Team} from "./team";
-
-const TEAMS: Team[] = [
-  {id: 10, name: 'Tappara'},
-  {id: 11, name: 'Ilves'},
-  {id: 12, name: 'TPS'},
-  {id: 13, name: 'KalPa'},
-  {id: 14, name: 'JYP'},
-  {id: 15, name: 'HPK'},
-  {id: 16, name: 'Pelicans'},
-  {id: 17, name: 'Ässät'},
-  {id: 18, name: 'Kärpät'},
-  {id: 19, name: 'HIFK'},
-  {id: 20, name: 'Lukko'},
-  {id: 21, name: 'SaiPa'},
-  {id: 22, name: 'Sport'},
-  {id: 23, name: 'Kookoo'},
-  {id: 24, name: 'Jukurit'}
-];
+import {TeamService} from './team.service';
+import {OnInit} from '@angular/core';
 
 @Component({
   selector: 'my-app',
@@ -79,16 +63,23 @@ const TEAMS: Team[] = [
     height: 1.8em;
     margin-right: .8em;
     border-radius: 4px 0 0 4px;
-  }
-`]
+  }`],
+  providers: [TeamService]
 })
-
-export class AppComponent {
+export class AppComponent implements OnInit {
+  constructor(private teamService: TeamService) {}
   title = 'Icehocker team editor';
   selectedTeam: Team;
-  teams = TEAMS;
+  teams: Team[];
 
   onSelect(team: Team): void {
     this.selectedTeam = team;
   };
+
+  getTeams(): void {
+    this.teamService.getTeams().then( teams => this.teams = teams);
+  }
+  ngOnInit(): void {
+    this.getTeams();
+  }
 }
