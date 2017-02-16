@@ -14,4 +14,10 @@ export class TeamService {
       setTimeout(() => resolve(this.getTeams()), 2000);
     });
   }
+
+  getTeam(id: number): Promise<Team> {
+    return this.getTeams()
+      .then(teams => teams.find(team => team.id === id));
+  }
+
 }

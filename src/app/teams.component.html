@@ -1,0 +1,14 @@
+<h2>Teams in 2017 league</h2>
+<ul class="teams">
+  <li *ngFor="let team of teams"
+      [class.selected]="team === selectedTeam"
+      (click)="onSelect(team)">
+    <span class="badge">{{team.id}}</span> {{team.name}}
+  </li>
+</ul>
+<div *ngIf="selectedTeam">
+  <h2>
+    {{selectedTeam.name | uppercase}} selected
+  </h2>
+  <button (click)="gotoDetail()">View Team</button>
+</div>

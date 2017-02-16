@@ -1,19 +1,31 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {ActivatedRoute, Params}   from '@angular/router';
+import {Location}                 from '@angular/common';
+import {TeamService} from './team.service';
 import {Team} from "./team";
+import 'rxjs/add/operator/switchMap';
 
 @Component({
+  moduleId: module.id,
   selector: 'my-team-detail',
-  template: `
-  <div *ngIf="team">
-    <h2>Icehockey team {{team.name}}</h2>
-    <div><label>id: </label>{{team.id}}</div>
-    <div>
-      <label>name: </label>
-      <input [(ngModel)]="team.name" placeholder="name"/>
-    </div>
-  </div>`
+  templateUrl: './team-detail.component.html',
+  styleUrls: ['./team-detail.component.css'],
 })
-export class TeamDetailComponent {
-  @Input()
+export class TeamDetailComponent implements OnInit {
   team: Team;
+
+  constructor(private teamService: TeamService,
+              private route: ActivatedRoute,
+              private location: Location) {
+  }
+
+  ngOnInit(): void {
+    this.route.params
+      .switchMap((params: Params) => this.teamService.getTeam(+params['id']))
+      .subscribe(team => this.team = team);
+  }
+
+  goBack(): void {
+    this.location.back();
+  }
 }
