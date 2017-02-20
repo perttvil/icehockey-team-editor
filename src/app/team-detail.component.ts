@@ -28,4 +28,9 @@ export class TeamDetailComponent implements OnInit {
   goBack(): void {
     this.location.back();
   }
+
+  save(): void {
+    this.teamService.update(this.team)
+      .then(() => this.goBack());
+  }
 }

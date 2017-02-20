@@ -1,9 +1,16 @@
 <h2>Teams in 2017 league</h2>
+<div>
+  <label>Team name:</label> <input #teamName/>
+  <button (click)="add(teamName.value); teamName.value=''">
+    Add
+  </button>
+</div>
 <ul class="teams">
   <li *ngFor="let team of teams"
       [class.selected]="team === selectedTeam"
       (click)="onSelect(team)">
     <span class="badge">{{team.id}}</span> {{team.name}}
+    <button class="delete" (click)="delete(team); $event.stopPropagation()">x</button>
   </li>
 </ul>
 <div *ngIf="selectedTeam">

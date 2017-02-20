@@ -32,4 +32,27 @@ export class TeamsComponent implements OnInit {
   gotoDetail(): void {
     this.router.navigate(['/detail', this.selectedTeam.id]);
   }
+
+  add(name: string): void {
+    name = name.trim();
+    if (!name) {
+      return;
+    }
+    this.teamService.create(name)
+      .then(team => {
+        this.teams.push(team);
+        this.selectedTeam = null;
+      });
+  }
+
+  delete(team: Team): void {
+    this.teamService
+      .delete(team.id)
+      .then(() => {
+        this.teams = this.teams.filter(h => h !== team);
+        if (this.selectedTeam === team) {
+          this.selectedTeam = null;
+        }
+      });
+  }
 }
